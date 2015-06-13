@@ -10,7 +10,7 @@
         android:layout_height="60dp"
         android:id="@+id/object_image"
         android:layout_gravity="center"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/index" />
 
     <TextView
         android:layout_width="wrap_content"

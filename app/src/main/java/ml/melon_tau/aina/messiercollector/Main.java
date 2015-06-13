@@ -14,7 +14,7 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new ObjectList())
+                    .add(R.id.container, new ObjectListFragment())
                     .commit();
         }
     }
