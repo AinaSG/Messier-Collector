@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import android.widget.ListView;
  * A placeholder fragment containing a simple view.
  */
 public class ObjectListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
-    
+
     private static final int MESSIEROBJECT_LOADER = 0;
     // For the forecast view we're showing only a small subset of the stored data.
     // Specify the columns we need.
@@ -61,9 +62,11 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
                 null);
 
         if (locationCursor.moveToFirst()) {
+            Log.d("potato", "movetofirst");
             int locationIdIndex = locationCursor.getColumnIndex(MessierObjectContract.MessierObjectEntry._ID);
             locationId = locationCursor.getLong(locationIdIndex);
         } else {
+            Log.d("potato", "elsemovetofirst");
             // Now that the content provider is set up, inserting rows of data is pretty simple.
             // First create a ContentValues object to hold the data you want to insert.
             ContentValues locationValues = new ContentValues();
@@ -77,10 +80,13 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
             locationValues.put(MessierObjectContract.MessierObjectEntry.COLUMN_OBJECT_DIAMETER, diameter);
 
             // Finally, insert location data into the database.
+            Log.d("potato", "preinsert");
+
             Uri insertedUri = getActivity().getContentResolver().insert(
                     MessierObjectContract.MessierObjectEntry.CONTENT_URI,
                     locationValues
             );
+            Log.d("potato", "postinsert");
 
             // The resulting URI contains the ID for the row.  Extract the locationId from the Uri.
             locationId = ContentUris.parseId(insertedUri);
@@ -122,15 +128,16 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         addObject("3", "Neddy sinc", "Dis is nerdy", 12, 5);
         addObject("4", "Joan sinc", "Dis is joan", 20, 400);
         addObject("5", "Aina sinc", "Dis is aina", 20, 4);
-
+        Log.d("potato", " prelistview <3");
         ListView lv = (ListView) rootView.findViewById(R.id.messier_object_list);
+        Log.d("potato", " postlistview <3");
         lv.setAdapter(messierAdapter);
         return rootView;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-
+        Log.d("potato", "onCreateLoader <3");
         // Sort order:  Ascending, by date.
         String sortOrder = MessierObjectContract.MessierObjectEntry.COLUMN_OBJECT_CODE + " ASC";
         Uri weatherForLocationUri = MessierObjectContract.MessierObjectEntry.buildMessierObjectUri(1);
@@ -145,6 +152,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        Log.d("potato", "OnLoadFinished <3");
         messierAdapter.swapCursor(cursor);
     }
 

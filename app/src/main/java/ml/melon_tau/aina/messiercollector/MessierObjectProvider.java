@@ -22,78 +22,7 @@ public class MessierObjectProvider extends ContentProvider {
     static final int MESSIEROBJECT = 100;
 
 
-   // private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
 
-    /*static{
-        sWeatherByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
-
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sWeatherByLocationSettingQueryBuilder.setTables(
-                MessierObjectContract.WeatherEntry.TABLE_NAME + " INNER JOIN " +
-                        MessierObjectContract.LocationEntry.TABLE_NAME +
-                        " ON " + MessierObjectContract.WeatherEntry.TABLE_NAME +
-                        "." + MessierObjectContract.WeatherEntry.COLUMN_LOC_KEY +
-                        " = " + MessierObjectContract.LocationEntry.TABLE_NAME +
-                        "." + MessierObjectContract.LocationEntry._ID);
-    }*/
-
-    //location.location_setting = ?
-/*    private static final String sLocationSettingSelection =
-            MessierObjectContract.LocationEntry.TABLE_NAME+
-                    "." + MessierObjectContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? ";
-
-    //location.location_setting = ? AND date >= ?
-    private static final String sLocationSettingWithStartDateSelection =
-            MessierObjectContract.LocationEntry.TABLE_NAME+
-                    "." + MessierObjectContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? AND " +
-                    MessierObjectContract.WeatherEntry.COLUMN_DATE + " >= ? ";
-
-    //location.location_setting = ? AND date = ?
-    private static final String sLocationSettingAndDaySelection =
-            MessierObjectContract.LocationEntry.TABLE_NAME +
-                    "." + MessierObjectContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? AND " +
-                    MessierObjectContract.WeatherEntry.COLUMN_DATE + " = ? ";*/
-
-   /* private Cursor getWeatherByLocationSetting(Uri uri, String[] projection, String sortOrder) {
-        String locationSetting = MessierObjectContract.MessierObjectEntry.getLocationSettingFromUri(uri);
-        long startDate = MessierObjectContract.MessierObjectEntry.getStartDateFromUri(uri);
-
-        String[] selectionArgs;
-        String selection;
-
-        if (startDate == 0) {
-            selection = sLocationSettingSelection;
-            selectionArgs = new String[]{locationSetting};
-        } else {
-            selectionArgs = new String[]{locationSetting, Long.toString(startDate)};
-            selection = sLocationSettingWithStartDateSelection;
-        }
-
-        return sWeatherByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                sortOrder
-        );
-    }
-
-    private Cursor getWeatherByLocationSettingAndDate(
-            Uri uri, String[] projection, String sortOrder) {
-        String locationSetting = MessierObjectContract.MessierObjectEntry.getLocationSettingFromUri(uri);
-        long date = MessierObjectContract.MessierObjectEntry.getDateFromUri(uri);
-
-        return sWeatherByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
-                projection,
-                sLocationSettingAndDaySelection,
-                new String[]{locationSetting, Long.toString(date)},
-                null,
-                null,
-                sortOrder
-        );
-    }*/
 
     /*
         Students: Here is where you need to create the UriMatcher. This UriMatcher will
@@ -101,6 +30,7 @@ public class MessierObjectProvider extends ContentProvider {
         and LOCATION integer constants defined above.  You can test this by uncommenting the
         testUriMatcher test within TestUriMatcher.
      */
+
     static UriMatcher buildUriMatcher() {
         // I know what you're thinking.  Why create a UriMatcher when you can use regular
         // expressions instead?  Because you're not crazy, that's why.
