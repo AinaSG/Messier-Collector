@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -26,8 +27,12 @@ public class MessierObjectListAdapter extends CursorAdapter {
         code_content.setText(cursor.getString(cursor.getColumnIndex(MessierObjectDbHelper.COLUMN_OBJECT_CODE)));
         TextView name_content = (TextView) view.findViewById(R.id.Object_Name);
         name_content.setText(cursor.getString(cursor.getColumnIndex(MessierObjectDbHelper.COLUMN_OBJECT_NAME)));
-        TextView desc_content = (TextView) view.findViewById(R.id.Object_Name);
+        TextView desc_content = (TextView) view.findViewById(R.id.Object_Desc);
         desc_content.setText(cursor.getString(cursor.getColumnIndex(MessierObjectDbHelper.COLUMN_OBJECT_DESC)));
+        ImageView imageView = (ImageView) view.findViewById(R.id.object_image);
+        Integer actualObject = cursor.getPosition()+1;
+        String actualImage ="m"+ actualObject.toString();
+        imageView.setImageResource(context.getResources().getIdentifier(actualImage, "drawable", context.getPackageName()));
     }
 
     @Override

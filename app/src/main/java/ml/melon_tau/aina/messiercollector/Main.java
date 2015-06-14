@@ -12,13 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 
 public class Main extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    SimpleCursorAdapter mAdapter;
+    MessierObjectListAdapter mAdapter;
 
      ListView mListView;
     @Override
@@ -27,30 +26,17 @@ public class Main extends Activity implements LoaderManager.LoaderCallbacks<Curs
         setContentView(R.layout.object_list);
         mListView = (ListView) findViewById(R.id.messier_object_list);
 
-
-        mAdapter = new SimpleCursorAdapter(getBaseContext(),
-                R.layout.messier_object,
-                null,
-                new String[] { MessierObjectDbHelper.COLUMN_OBJECT_CODE,
-                               MessierObjectDbHelper.COLUMN_OBJECT_NAME,
-                               MessierObjectDbHelper.COLUMN_OBJECT_DESC,
-                },
-                new int[] { R.id.Object_Code , R.id.Object_Name, R.id.Object_Desc}, 0);
-                mListView.setAdapter(mAdapter);
-                getLoaderManager().initLoader(0, null, this);
-
-        /*if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new ObjectListFragment())
-                    .commit();
-        }*/
+        mAdapter = new MessierObjectListAdapter(getBaseContext(), null, 0);
+        mListView.setAdapter(mAdapter);
+        getLoaderManager().initLoader(0, null, this);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+               // Integer pos = position + 1;
                 Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
+                        "Has seleccionat l'objecte M" + (position+1), Toast.LENGTH_LONG)
                         .show();
             }
         });
