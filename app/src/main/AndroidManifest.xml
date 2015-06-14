@@ -17,9 +17,9 @@
             </intent-filter>
         </activity>
         <provider
-            android:name="ml.melon_tau.aina.messiercollector.MessierObjectProvider"
-            android:authorities="ml.melon_tau.aina.messiercollector.MessierObjectProvider">
-        </provider>
+            android:name="MessierObjectProvider"
+            android:authorities="ml.melon_tau.aina.messiercollector.objects"
+            android:exported="false" />
     </application>
 
 

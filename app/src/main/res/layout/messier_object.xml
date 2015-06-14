@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:padding="10dp">
 
     <ImageView
@@ -10,14 +10,37 @@
         android:layout_height="60dp"
         android:id="@+id/object_image"
         android:layout_gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/index" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="ObjectID"
-        android:id="@+id/object_ID"
-        android:layout_gravity="center" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ObjectCode"
+        android:id="@+id/Object_Code"
+        android:paddingRight="5dp"
+        android:layout_alignLeft="@+id/Object_Desc"
+        android:layout_alignStart="@+id/Object_Desc" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="ObjectName"
+        android:id="@+id/Object_Name"
+        android:layout_alignBottom="@+id/Object_Code"
+        android:layout_toRightOf="@+id/Object_Code"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ObjectDescription"
+        android:id="@+id/Object_Desc"
+        android:layout_below="@+id/Object_Code"
+        android:layout_toRightOf="@+id/object_image"
+        android:layout_toEndOf="@+id/object_image" />
+
+</RelativeLayout>

@@ -5,22 +5,74 @@ package ml.melon_tau.aina.messiercollector;
  */
 
 
-import android.annotation.TargetApi;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 public class MessierObjectProvider extends ContentProvider {
 
+
+
+    public static final String PROVIDER_NAME = "ml.melon_tau.aina.messiercollector.objects";
+
+    /** A uri to do operations on cust_master table. A content provider is identified by its uri */
+    public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/messierobjects" );
+
+    /** Constants to identify the requested operation */
+    private static final int MESSIEROBJECT = 1;
+
+
+
     // The URI Matcher used by this content provider.
-    private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private MessierObjectDbHelper mOpenHelper;
+    private static final UriMatcher uriMatcher ;
+    static {
+        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "messierobjects", MESSIEROBJECT);
+    }
 
-    static final int MESSIEROBJECT = 100;
+    MessierObjectDbHelper mMessierObjectDB;
 
+    @Override
+    public boolean onCreate() {
+        mMessierObjectDB = new MessierObjectDbHelper(getContext());
+        return true;
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        return null;
+    }
+
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
+        if(uriMatcher.match(uri)==MESSIEROBJECT){
+            return mMessierObjectDB.getAllObjects();
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection,
+                      String[] selectionArgs) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
 
 
@@ -31,7 +83,7 @@ public class MessierObjectProvider extends ContentProvider {
         testUriMatcher test within TestUriMatcher.
      */
 
-    static UriMatcher buildUriMatcher() {
+    /*static UriMatcher buildUriMatcher() {
         // I know what you're thinking.  Why create a UriMatcher when you can use regular
         // expressions instead?  Because you're not crazy, that's why.
 
@@ -44,24 +96,24 @@ public class MessierObjectProvider extends ContentProvider {
         // For each type of URI you want to add, create a corresponding code.
         matcher.addURI(authority, MessierObjectContract.PATH_MESSIEROBJECT, MESSIEROBJECT);
         return matcher;
-    }
+    }*/
 
     /*
         Students: We've coded this for you.  We just create a new MessierObjectDbHelper for later use
         here.
      */
-    @Override
+    /*@Override
     public boolean onCreate() {
         mOpenHelper = new MessierObjectDbHelper(getContext());
         return true;
-    }
+    }*/
 
     /*
         Students: Here's where you'll code the getType function that uses the UriMatcher.  You can
         test this by uncommenting testGetType in TestProvider.
 
      */
-    @Override
+   /* @Override
     public String getType(Uri uri) {
 
         // Use the Uri Matcher to determine what kind of URI this is.
@@ -74,9 +126,9 @@ public class MessierObjectProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         // Here's the switch statement that, given a URI, will determine what kind of request it is,
@@ -102,12 +154,12 @@ public class MessierObjectProvider extends ContentProvider {
         }
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return retCursor;
-    }
+    }*/
 
     /*
         Student: Add the ability to insert Locations to the implementation of this function.
      */
-    @Override
+    /*@Override
     public Uri insert(Uri uri, ContentValues values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
@@ -127,9 +179,9 @@ public class MessierObjectProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
@@ -149,9 +201,9 @@ public class MessierObjectProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return rowsDeleted;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public int update(
             Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
@@ -170,17 +222,18 @@ public class MessierObjectProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return rowsUpdated;
-    }
+    }*/
 
 
 
     // You do not need to call this method. This is a method specifically to assist the testing
     // framework in running smoothly. You can read more at:
     // http://developer.android.com/reference/android/content/ContentProvider.html#shutdown()
-    @Override
+    /*@Override
     @TargetApi(11)
     public void shutdown() {
         mOpenHelper.close();
         super.shutdown();
-    }
+    }*/
+
 }
