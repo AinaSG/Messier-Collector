@@ -33,6 +33,12 @@ public class MessierObjectListAdapter extends CursorAdapter {
         Integer actualObject = cursor.getPosition()+1;
         String actualImage ="m"+ actualObject.toString();
         imageView.setImageResource(context.getResources().getIdentifier(actualImage, "drawable", context.getPackageName()));
+        if (cursor.getInt(cursor.getColumnIndex(MessierObjectDbHelper.COLUMN_OBJECT_SEEN)) != 0){
+            view.setBackgroundColor(context.getResources().getColor(R.color.darkred));
+        }
+        else {
+            view.setBackgroundColor(context.getResources().getColor(R.color.green));
+        }
     }
 
     @Override

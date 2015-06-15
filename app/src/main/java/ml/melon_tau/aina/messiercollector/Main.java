@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -40,6 +41,26 @@ public class Main extends Activity implements LoaderManager.LoaderCallbacks<Curs
                         .show();
             }
         });
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+
+                Cursor cur = (Cursor) mAdapter.getItem(position);
+                cur.moveToPosition(position);
+                String s = cur.getString(cur.getColumnIndex(MessierObjectDbHelper.COLUMN_ID));
+                String q = "UPDATE messier_objects SET object_seen = 1 WHERE _id = " + s;
+                SQLiteDatabase db= openOrCreateDatabase("mesierobjects.db", SQLiteDatabase.OPEN_READWRITE, null);
+                db.execSQL(q);
+                Toast.makeText(getApplicationContext(),
+                        "Click llarg a l'objecte M" + (position +1) + s, Toast.LENGTH_LONG)
+                        .show();
+                mListView.invalidateViews(); ////NUT GUORKIN TO DO
+                return true;
+            }
+        });
+
     }
 
 

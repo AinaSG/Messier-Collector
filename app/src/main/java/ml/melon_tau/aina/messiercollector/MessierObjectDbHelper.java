@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-//import ml.melon_tau.aina.messiercollector.MessierObjectContract.MessierObjectEntry;
 
 /**
  * Manages a local database for weather data.
@@ -37,6 +36,7 @@ public class MessierObjectDbHelper extends SQLiteOpenHelper {
         this.mDB = getWritableDatabase();
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create a table to hold locations.  A location consists of the string supplied in the
@@ -44,7 +44,7 @@ public class MessierObjectDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_OBJECT_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_OBJECT_CODE + " TEXT NOT NULL, " +
-                COLUMN_OBJECT_SEEN + " BOOLEAN NOT NULL DEFAULT 0, " +
+                COLUMN_OBJECT_SEEN + " INTEGER NOT NULL DEFAULT 0, " +
                 COLUMN_OBJECT_NAME + " TEXT, " +
                 COLUMN_OBJECT_DESC + " TEXT, " +
                 COLUMN_OBJECT_APARENTMAG + " REAL NOT NULL, " +
@@ -606,6 +606,7 @@ public class MessierObjectDbHelper extends SQLiteOpenHelper {
 
 
     }
+
 
     public Cursor getAllObjects(){
         return mDB.query(TABLE_NAME, new String[] { COLUMN_ID,
