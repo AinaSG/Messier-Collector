@@ -47,16 +47,17 @@ public class Main extends Activity implements LoaderManager.LoaderCallbacks<Curs
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
 
-                Cursor cur = (Cursor) mAdapter.getItem(position);
+                Cursor cur = mAdapter.getCursor();
+                //Cursor cur = (Cursor) mAdapter.getItem(position);
                 cur.moveToPosition(position);
                 String s = cur.getString(cur.getColumnIndex(MessierObjectDbHelper.COLUMN_ID));
                 String q = "UPDATE messier_objects SET object_seen = 1 WHERE _id = " + s;
                 SQLiteDatabase db= openOrCreateDatabase("mesierobjects.db", SQLiteDatabase.OPEN_READWRITE, null);
-                db.execSQL(q);
                 Toast.makeText(getApplicationContext(),
                         "Click llarg a l'objecte M" + (position +1) + s, Toast.LENGTH_LONG)
                         .show();
-                mListView.invalidateViews(); ////NUT GUORKIN TO DO
+                mAdapter.swapCursor(cur); // automatically closes old Cursor
+                mAdapter.notifyDataSetChanged();
                 return true;
             }
         });
