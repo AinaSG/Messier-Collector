@@ -45,10 +45,12 @@ public class MessierObjectListAdapter extends CursorAdapter {
         imageView.setImageResource(context.getResources().getIdentifier(actualImage, "drawable", context.getPackageName()));
 
         if (cursor.getInt(cursor.getColumnIndexOrThrow("object_seen")) != 0){
-            view.setBackgroundColor(context.getResources().getColor(R.color.darkred));
+            //view.setBackgroundColor(context.getResources().getColor(R.color.darkred));
+            view.setAlpha(0.2f);
         }
         else {
-            view.setBackgroundColor(context.getResources().getColor(R.color.green));
+            //view.setBackgroundColor(context.getResources().getColor(R.color.green));
+            view.setAlpha(1);
         }
     }
 

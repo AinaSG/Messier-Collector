@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,10 +56,19 @@ public class Main extends Activity /*implements LoaderManager.LoaderCallbacks<Cu
                                            int position, long id) {
                 messierCursor.moveToPosition(position);
                 String s = messierCursor.getString(messierCursor.getColumnIndexOrThrow("_id"));
+                String seen = messierCursor.getString(messierCursor.getColumnIndexOrThrow("object_seen"));
+                Log.d("SEEN", "SEEN bf: " + seen);
                 String q = "UPDATE messier_objects SET object_seen = 1 WHERE _id = " + s;
+                if ( seen.equals("1")) {
+                    Log.d("SEEN", "SETTING TO 0");
+                    q = "UPDATE messier_objects SET object_seen = 0 WHERE _id = " + s;
+                }
                 datbas.execSQL(q);
                 Cursor newmessierCursor = datbas.rawQuery("SELECT * FROM messier_objects", null);
                 mAdapter.swapCursor(newmessierCursor);
+                messierCursor = newmessierCursor;
+                seen = messierCursor.getString(messierCursor.getColumnIndexOrThrow("object_seen"));
+                Log.d("SEEN", "SEEN aft: " + seen);
                 Toast.makeText(getApplicationContext(),
                         "Click llarg a l'objecte M" + (position +1), Toast.LENGTH_LONG)
                         .show();
