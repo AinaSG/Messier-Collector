@@ -1,12 +1,8 @@
 package ml.melon_tau.aina.messiercollector;
 
 import android.app.Activity;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,29 +11,40 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import ml.melon_tau.aina.messiercollector.data.MessierObjectDbHelper;
 
-public class Main extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+public class Main extends Activity /*implements LoaderManager.LoaderCallbacks<Cursor> */{
 
     MessierObjectListAdapter mAdapter;
+    Cursor messierCursor;
+    SQLiteDatabase datbas;
+    ListView mListView;
 
-     ListView mListView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.object_list);
+
+        MessierObjectDbHelper MesObHelp = new MessierObjectDbHelper(this);
+        datbas = MesObHelp.getWritableDatabase();
+        messierCursor = datbas.rawQuery("SELECT * FROM messier_objects", null);
+
         mListView = (ListView) findViewById(R.id.messier_object_list);
 
-        mAdapter = new MessierObjectListAdapter(getBaseContext(), null, 0);
+        mAdapter = new MessierObjectListAdapter(this, messierCursor, 0);
         mListView.setAdapter(mAdapter);
-        getLoaderManager().initLoader(0, null, this);
+        //getLoaderManager().initLoader(0, null, this);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-               // Integer pos = position + 1;
                 Toast.makeText(getApplicationContext(),
-                        "Has seleccionat l'objecte M" + (position+1), Toast.LENGTH_LONG)
+                        "Has seleccionat l'objecte M" + (position + 1), Toast.LENGTH_LONG)
                         .show();
             }
         });
@@ -46,18 +53,15 @@ public class Main extends Activity implements LoaderManager.LoaderCallbacks<Curs
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
-
-                Cursor cur = mAdapter.getCursor();
-                //Cursor cur = (Cursor) mAdapter.getItem(position);
-                cur.moveToPosition(position);
-                String s = cur.getString(cur.getColumnIndex(MessierObjectDbHelper.COLUMN_ID));
+                messierCursor.moveToPosition(position);
+                String s = messierCursor.getString(messierCursor.getColumnIndexOrThrow("_id"));
                 String q = "UPDATE messier_objects SET object_seen = 1 WHERE _id = " + s;
-                SQLiteDatabase db= openOrCreateDatabase("mesierobjects.db", SQLiteDatabase.OPEN_READWRITE, null);
+                datbas.execSQL(q);
+                Cursor newmessierCursor = datbas.rawQuery("SELECT * FROM messier_objects", null);
+                mAdapter.swapCursor(newmessierCursor);
                 Toast.makeText(getApplicationContext(),
-                        "Click llarg a l'objecte M" + (position +1) + s, Toast.LENGTH_LONG)
+                        "Click llarg a l'objecte M" + (position +1), Toast.LENGTH_LONG)
                         .show();
-                mAdapter.swapCursor(cur); // automatically closes old Cursor
-                mAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -65,13 +69,16 @@ public class Main extends Activity implements LoaderManager.LoaderCallbacks<Curs
     }
 
 
+/*
     @Override
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        Uri uri = MessierObjectProvider.CONTENT_URI;
+        Uri uri = MessierObjectContract.MessierObjectEntry.CONTENT_URI;
         return new CursorLoader(this, uri, null, null, null, null);
     }
 
-    /** A callback method, invoked after the requested content provider returned all the data */
+    */
+/** A callback method, invoked after the requested content provider returned all the data *//*
+
     @Override
     public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
         mAdapter.swapCursor(arg1);
@@ -81,6 +88,7 @@ public class Main extends Activity implements LoaderManager.LoaderCallbacks<Curs
     public void onLoaderReset(Loader<Cursor> arg0) {
         mAdapter.swapCursor(null);
     }
+*/
 
 
     @Override
