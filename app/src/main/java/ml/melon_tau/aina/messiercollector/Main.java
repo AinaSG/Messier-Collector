@@ -1,26 +1,17 @@
 package ml.melon_tau.aina.messiercollector;
 
 import android.app.Activity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import ml.melon_tau.aina.messiercollector.data.MessierObjectDbHelper;
 
 
-public class Main extends Activity /*implements LoaderManager.LoaderCallbacks<Cursor> */{
+public class Main extends Activity{
 
-    MessierObjectListAdapter mAdapter;
+   /* MessierObjectListAdapter mAdapter;
     Cursor messierCursor;
     SQLiteDatabase datbas;
-    ListView mListView;
+    ListView mListView;*/
 
 
 
@@ -28,9 +19,14 @@ public class Main extends Activity /*implements LoaderManager.LoaderCallbacks<Cu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.object_list);
+        //setContentView(R.layout.object_list);
+        setContentView(R.layout.activity_main);
+      /*  final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.fragment, new MessierObjectListFragment(), "MessierListTag");
+        //ft.addToBackStack(null);
+        ft.commit();*/
 
-        MessierObjectDbHelper MesObHelp = new MessierObjectDbHelper(this);
+        /*MessierObjectDbHelper MesObHelp = new MessierObjectDbHelper(this);
         datbas = MesObHelp.getWritableDatabase();
         messierCursor = datbas.rawQuery("SELECT * FROM messier_objects", null);
 
@@ -38,7 +34,6 @@ public class Main extends Activity /*implements LoaderManager.LoaderCallbacks<Cu
 
         mAdapter = new MessierObjectListAdapter(this, messierCursor, 0);
         mListView.setAdapter(mAdapter);
-        //getLoaderManager().initLoader(0, null, this);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,62 +52,34 @@ public class Main extends Activity /*implements LoaderManager.LoaderCallbacks<Cu
                 messierCursor.moveToPosition(position);
                 String s = messierCursor.getString(messierCursor.getColumnIndexOrThrow("_id"));
                 String seen = messierCursor.getString(messierCursor.getColumnIndexOrThrow("object_seen"));
-                Log.d("SEEN", "SEEN bf: " + seen);
                 String q = "UPDATE messier_objects SET object_seen = 1 WHERE _id = " + s;
                 if ( seen.equals("1")) {
-                    Log.d("SEEN", "SETTING TO 0");
+
                     q = "UPDATE messier_objects SET object_seen = 0 WHERE _id = " + s;
                 }
                 datbas.execSQL(q);
                 Cursor newmessierCursor = datbas.rawQuery("SELECT * FROM messier_objects", null);
                 mAdapter.swapCursor(newmessierCursor);
                 messierCursor = newmessierCursor;
-                seen = messierCursor.getString(messierCursor.getColumnIndexOrThrow("object_seen"));
-                Log.d("SEEN", "SEEN aft: " + seen);
                 Toast.makeText(getApplicationContext(),
                         "Click llarg a l'objecte M" + (position +1), Toast.LENGTH_LONG)
                         .show();
                 return true;
             }
-        });
+        });*/
 
     }
-
-
-/*
-    @Override
-    public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        Uri uri = MessierObjectContract.MessierObjectEntry.CONTENT_URI;
-        return new CursorLoader(this, uri, null, null, null, null);
-    }
-
-    */
-/** A callback method, invoked after the requested content provider returned all the data *//*
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
-        mAdapter.swapCursor(arg1);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> arg0) {
-        mAdapter.swapCursor(null);
-    }
-*/
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
