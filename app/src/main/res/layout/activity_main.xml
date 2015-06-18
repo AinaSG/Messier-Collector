@@ -4,8 +4,8 @@
 
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment"
-    android:name="ml.melon_tau.aina.messiercollector.MessierObjectListFragment"
-    tools:layout="@layout/object_list"
+    android:name="ml.melon_tau.aina.messiercollector.BlankFragment"
+    tools:layout="@layout/fragment_blank"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
 

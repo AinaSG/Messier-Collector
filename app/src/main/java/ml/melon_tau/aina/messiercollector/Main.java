@@ -1,6 +1,7 @@
 package ml.melon_tau.aina.messiercollector;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,10 @@ public class Main extends Activity{
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.object_list);
         setContentView(R.layout.activity_main);
+       final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.fragment, new MessierObjectListFragment(), "MessierListTag");
+        //ft.addToBackStack(null);
+        ft.commit();
     }
 
 

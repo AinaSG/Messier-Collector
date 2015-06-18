@@ -53,7 +53,17 @@ public class MessierObjectListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment, new MessierObjectInfoFragment(), "MessierInfoTag");
+                MessierObjectInfoFragment infofrag = new MessierObjectInfoFragment();
+                Bundle args = new Bundle();
+                messierCursor.moveToPosition(position);
+                args.putString("ob_code", messierCursor.getString(messierCursor.getColumnIndexOrThrow("object_code")));
+                args.putString("ob_name", messierCursor.getString(messierCursor.getColumnIndexOrThrow("object_name")));
+                args.putString("ob_desc", messierCursor.getString(messierCursor.getColumnIndexOrThrow("object_desc")));
+                args.putFloat("ob_magn", messierCursor.getFloat(messierCursor.getColumnIndexOrThrow("object_aparentmag")));
+                args.putFloat("ob_dist", messierCursor.getFloat(messierCursor.getColumnIndexOrThrow("object_distance")));
+                args.putInt("ob_which", (position+1));
+                infofrag.setArguments(args);
+                ft.replace(R.id.fragment, infofrag, "MessierInfoTag");
                 ft.addToBackStack(null);
                 ft.commit();
                 Toast.makeText(cont,
@@ -91,6 +101,7 @@ public class MessierObjectListFragment extends Fragment {
 
         return fragView;
     }
+
 }
 
 
