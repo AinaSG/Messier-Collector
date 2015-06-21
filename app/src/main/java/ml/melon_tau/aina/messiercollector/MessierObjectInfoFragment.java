@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,7 @@ public class MessierObjectInfoFragment extends Fragment {
         final String ob_code = args.getString("ob_code");
         String ob_name = args.getString("ob_name");
         String ob_desc = args.getString("ob_desc");
-        Integer actualObject = args.getInt("ob_which");
+        final Integer actualObject = args.getInt("ob_which");
         Float ob_magn = args.getFloat("ob_magn");
         Float ob_dist = args.getFloat("ob_dist");
         //Assignar el content
@@ -61,6 +63,22 @@ public class MessierObjectInfoFragment extends Fragment {
                 startActivity(i);
             }
 
+        });
+
+
+        //Not working well ;_;
+        Button buttonskeye = (Button) view.findViewById(R.id.buttonskeye);
+        buttonskeye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String objPath = "astro_object//messier/m" + actualObject.toString();
+                Log.d("OBJ", objPath);
+                Log.d("OBJ", "["+objPath+"]");
+                Intent skEyeIntent = new Intent(Intent.ACTION_SEARCH);
+                final Uri targetUri = new Uri.Builder().path(objPath).build();
+                skEyeIntent.setDataAndType(targetUri, "text/astro_object");
+                startActivity(skEyeIntent);
+            }
         });
 
         return view;

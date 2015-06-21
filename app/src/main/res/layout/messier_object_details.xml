@@ -8,8 +8,9 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="58dp">
+        android:layout_width="fill_parent"
+        android:layout_height="58dp"
+        android:baselineAligned="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +20,8 @@
             android:id="@+id/objectcode"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +29,13 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Name"
             android:id="@+id/objectname" />
+
     </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <ImageView
         android:layout_width="200dp"
@@ -35,7 +43,14 @@
         android:id="@+id/objectimage"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_launcher"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"/>
+
+    <!-- linia horitzontal -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -49,12 +64,20 @@
             android:text="Description"
             android:id="@+id/objectdescription"
             android:layout_gravity="center_horizontal"
-            android:paddingBottom="10dp" />
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"/>
+        <!-- linia horitzontal -->
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
+        <!-- Camp de magnitud -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="42dp">
+            android:layout_height="42dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,6 +98,7 @@
 
         </LinearLayout>
 
+        <!-- Camp de distancia -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -100,11 +124,30 @@
 
     </LinearLayout>
 
+    <!-- filler -->
+    <TextView android:layout_height="0dip"
+        android:layout_width="fill_parent"
+        android:layout_weight="1" />
+
+    <!-- Botó d'Skymap -->
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="Search in Skeye"
+        android:id="@+id/buttonskeye"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold" />
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:text="Search in SkyMap"
         android:id="@+id/buttonskymap"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold" />
 </LinearLayout>
